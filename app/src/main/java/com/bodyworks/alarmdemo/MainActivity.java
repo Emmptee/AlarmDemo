@@ -12,7 +12,8 @@ import com.socks.library.KLog;
 
 import java.util.Calendar;
 
-import static com.bodyworks.alarmdemo.AlarmReceiver.INTERVAL;
+import static com.bodyworks.alarmdemo.XiuMianAlarmReceiver.INTERVAL;
+import static com.bodyworks.alarmdemo.XiuMianAlarmReceiver.XIU_MIAN_KEY;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,10 +28,11 @@ public class MainActivity extends AppCompatActivity {
         calendar.setTimeInMillis(System.currentTimeMillis());
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, AlarmReceiver.class);
-        PendingIntent broadcast = PendingIntent.getBroadcast(this, 0, intent, 0);
+        Intent startIntent = new Intent(this, XiuMianAlarmReceiver.class);
+        startIntent.putExtra(XIU_MIAN_KEY, true);
+        PendingIntent broadcast = PendingIntent.getBroadcast(this, 0, startIntent, 0);
         alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis() + INTERVAL, broadcast);
 
-        KLog.a("alarm start"+calendar.getTime().toString());
+        KLog.a("alarm start" + calendar.getTime().toString());
     }
 }
